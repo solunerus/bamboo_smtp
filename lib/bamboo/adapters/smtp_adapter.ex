@@ -19,7 +19,7 @@ defmodule Bamboo.SMTPAdapter do
         username: "your.name@your.domain", # or {:system, "SMTP_USERNAME"}
         password: "pa55word", # or {:system, "SMTP_PASSWORD"}
         tls: :if_available, # can be `:always` or `:never`
-        allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"],
+        allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2", :"tlsv1.3"],
         # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma separated values (e.g. "tlsv1.1,tlsv1.2")
         tls_log_level: :error,
         tls_verify: :verify_peer, # optional, can be `:verify_peer` or `:verify_none`
@@ -50,7 +50,7 @@ defmodule Bamboo.SMTPAdapter do
     transport: :gen_smtp_client,
     auth: :if_available
   }
-  @tls_versions ~w(tlsv1 tlsv1.1 tlsv1.2)
+  @tls_versions ~w(tlsv1 tlsv1.1 tlsv1.2 tlsv1.3)
   @log_levels [:critical, :error, :warning, :notice]
   @tls_verify [:verify_peer, :verify_none]
 
@@ -473,6 +473,14 @@ defmodule Bamboo.SMTPAdapter do
     [{:tls, value} | config]
   end
 
+  defp to_gen_smtp_server_config({:sockopts, value}, config) do
+    Keyword.put(config, :sockopts, value)
+  end
+
+  defp to_gen_smtp_server_config({:tls_options, value}, config) do
+    Keyword.put(config, :tls_options, value)
+  end
+
   defp to_gen_smtp_server_config({:allowed_tls_versions, value}, config) when is_binary(value) do
     Keyword.update(config, :tls_options, [{:versions, string_to_tls_versions(value)}], fn c ->
       [{:versions, string_to_tls_versions(value)} | c]
@@ -573,10 +581,6 @@ defmodule Bamboo.SMTPAdapter do
 
   defp to_gen_smtp_server_config({:auth, value}, config) when is_atom(value) do
     [{:auth, value} | config]
-  end
-
-  defp to_gen_smtp_server_config({:sockopts, value}, config) do
-    [{:sockopts, value} | config]
   end
 
   defp to_gen_smtp_server_config({conf, {:system, var}}, config) do
