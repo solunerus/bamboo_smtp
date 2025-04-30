@@ -1,14 +1,14 @@
 defmodule BambooSmtp.Mixfile do
   use Mix.Project
 
-  @project_url "https://github.com/fewlinesco/bamboo_smtp"
-  @version "4.2.2"
+  @project_url "https://github.com/solunerus/bamboo_smtp"
+  @version "5.0.0"
 
   def project do
     [
       app: :bamboo_smtp,
       version: @version,
-      elixir: "~> 1.7",
+      elixir: "~> 1.18",
       source_url: @project_url,
       homepage_url: @project_url,
       name: "Bamboo SMTP Adapter",
@@ -29,31 +29,23 @@ defmodule BambooSmtp.Mixfile do
   defp deps do
     [
       # core
-      {:bamboo, "~> 2.2.0"},
-      {:gen_smtp, "~> 1.2.0"},
+      {:bamboo, "~> 2.4.0"},
+      {:gen_smtp, git: "https://github.com/gen-smtp/gen_smtp.git", branch: "master"},
 
       # dev / test
-      {:credo, "~> 1.6.1", only: [:dev, :test]},
-      {:excoveralls, "~> 0.14.0", only: :test},
+      {:credo, "~> 1.7.12", only: [:dev, :test]},
+      {:excoveralls, "~> 0.18.5", only: :test},
 
       # doc
-      {:earmark, ">= 1.3.2", only: :docs},
-      {:ex_doc, ex_doc_version(), only: :docs},
+      {:earmark, ">= 1.4.47", only: :docs},
+      {:ex_doc, "~> 0.37.3", only: :docs},
       {:inch_ex, "~> 2.0.0", only: :docs}
     ]
   end
 
-  defp ex_doc_version do
-    if Version.match?(System.version(), "~> 1.7") do
-      "~> 0.24.0"
-    else
-      "~> 0.18.4"
-    end
-  end
-
   defp package do
     [
-      maintainers: ["Kevin Disneur", "Thomas Gautier"],
+      maintainers: ["Soluciones Nerus"],
       licenses: ["MIT"],
       links: %{
         "Changelog" => "#{@project_url}/blob/main/CHANGELOG.md",
