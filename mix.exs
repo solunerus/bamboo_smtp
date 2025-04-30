@@ -33,13 +33,13 @@ defmodule BambooSmtp.Mixfile do
       {:gen_smtp, git: "https://github.com/gen-smtp/gen_smtp.git", branch: "master"},
 
       # dev / test
-      {:credo, "~> 1.7.12", only: [:dev, :test]},
-      {:excoveralls, "~> 0.18.5", only: :test},
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false},
+      {:excoveralls, "~> 0.18.5", only: :test, runtime: false},
 
       # doc
-      {:earmark, ">= 1.4.47", only: :docs},
-      {:ex_doc, "~> 0.37.3", only: :docs},
-      {:inch_ex, "~> 2.0.0", only: :docs}
+      {:earmark, ">= 1.4.47", only: :dev, runtime: false},
+      {:inch_ex, "~> 2.0.0", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.37.3", only: :dev, runtime: false}
     ]
   end
 
@@ -56,7 +56,7 @@ defmodule BambooSmtp.Mixfile do
 
   defp docs do
     [
-      main: "readme",
+      main: "BambooSmtp",
       source_ref: "v#{@version}",
       extras: ["README.md", "CHANGELOG.md": [title: "Changelog"]]
     ]
