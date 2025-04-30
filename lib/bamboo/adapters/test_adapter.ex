@@ -4,7 +4,7 @@ defmodule BambooSMTP.TestAdapter do
 
   The `deliver/2` function will provide a response that follow the format of a SMTP server raw response.
 
-  No emails are sent, instead it sends back `{%Bamboo.Email{...}, {:ok,"<raw_smtp_response>"}}` 
+  No emails are sent, instead it sends back `{%Bamboo.Email{...}, {:ok,"<raw_smtp_response>"}}`
   for success and raise an exception on error.
 
   ## Example config
