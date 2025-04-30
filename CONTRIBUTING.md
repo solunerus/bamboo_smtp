@@ -14,8 +14,8 @@ Before submitting a Pull Request, please ensure the following:
 ## Setup
 
 ```
-$ git clone https://github.com/fewlinesco/bamboo_smtp.git
-$ cd bamboo_smtp
-$ mix deps.get
-$ mix test
+git clone https://github.com/solunerus/bamboo_smtp.git
+cd bamboo_smtp
+mix deps.get
+mix test
 ```
